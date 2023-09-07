@@ -1,9 +1,11 @@
 <template>
-  <div></div>
+<div>
+
+</div>
 </template>
 
 <script>
-  export default {
-    name: 'home-view'
-  }
+export default {
+  name: 'homme-view',
+}
 </script>
