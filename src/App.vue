@@ -1,5 +1,5 @@
 <template>
-  <main class="">
+  <main class="container">
     <NavBar />
     <!-- Pages -->
     <router-view />
@@ -16,4 +16,11 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+  .container{ 
+    padding: 5%;
+    display: flex;
+    flex-direction: row;
+  }
+
+</style>
