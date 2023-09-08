@@ -1,18 +1,19 @@
 <template>
   <main class="">
-    <!-- Navigation menu -->
-    <nav></nav>
-    <!-- Search form -->
-    <header class="mt-8">
-      <input class="border-slate-400" type="text" placeholder="search.." />
-    </header>
+    <NavBar />
     <!-- Pages -->
     <router-view />
   </main>
 </template>
 
 <script>
+import NavBar from '@/components/layout/NavBar.vue'
 export default {
-  name: 'app-view'
+  name: 'app-view',
+  components: {
+    NavBar
+  }
 }
 </script>
+
+<style lang="scss" scoped></style>
