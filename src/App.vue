@@ -13,11 +13,16 @@
 
 <script>
 import searchForm from '@/components/form/SearchForm.vue'
+
+
 export default {
   name: 'app-view',
+  data() {
+   return {}
+  },
   components: {
     searchForm
-  }
+  },
 }
 </script>
 
@@ -33,5 +38,9 @@ export default {
 
 .main {
   padding: 0 3rem;
+  h1{
+    color: white;
+    font-size: 8rem;
+  }
 }
 </style>
