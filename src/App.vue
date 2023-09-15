@@ -1,25 +1,37 @@
 <template>
-  <main class="container">
+  <div class="container">
     <NavBar />
-    <!-- Pages -->
-    <router-view />
-  </main>
+
+    <main class="main">
+      <!-- Search form -->
+      <searchForm />
+      <!-- Pages -->
+      <router-view />
+    </main>
+  </div>
 </template>
 
 <script>
-// import NavBar from '@/components/layout/NavBar.vue'
+import searchForm from '@/components/form/SearchForm.vue'
 export default {
   name: 'app-view',
   components: {
-    // NavBar
+    searchForm
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/main.scss';
 .container {
   padding: 5%;
+  width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: row;
+}
+
+.main {
+  padding: 0 3rem;
 }
 </style>
