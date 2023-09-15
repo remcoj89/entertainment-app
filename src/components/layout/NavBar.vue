@@ -1,6 +1,5 @@
 <template>
   <nav class="nav">
-    
     <div class="nav__list">
       <IconCategoryMovie id="nav__category" />
       <IconNavHome />
@@ -9,7 +8,7 @@
       <IconNavBookmark />
     </div>
 
-    <img class="nav__avatar" src="@/assets/images/image-avatar.png" alt="avatar">
+    <img class="nav__avatar" src="@/assets/images/image-avatar.png" alt="avatar" />
   </nav>
 </template>
 
@@ -45,15 +44,14 @@ export default {
   align-items: center;
   border-radius: 15px;
 
-
-  &__list{
+  &__list {
     height: 25%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
 
-  &__avatar{
+  &__avatar {
     width: 4rem;
     height: 4rem;
   }

@@ -1,4 +1,5 @@
 import './assets/main.scss'
+import GlobalComponents from './includes/_globlas'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
@@ -10,5 +11,6 @@ const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
+app.use(GlobalComponents)
 
 app.mount('#app')
