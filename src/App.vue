@@ -36,7 +36,8 @@ export default {
 }
 
 .main {
-  padding: 0 3rem;
+  padding: 0 5%;
+  width: 100%;
   h1 {
     color: white;
     font-size: 8rem;

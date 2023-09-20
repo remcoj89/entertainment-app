@@ -1,15 +1,15 @@
 <template>
-<div :type="type" :class="mode" :id="id">
+  <div :type="type" :class="mode" :id="id">
     <slot>
-        <h2>Backup text</h2>
+      <h2>Backup text</h2>
     </slot>
-</div>
+  </div>
 </template>
 
 <script>
-    export default{
-        props: ["type,","mode","id"]
-    }
+export default {
+  props: ['type,', 'mode', 'id']
+}
 </script>
 
 <style lang="scss" scoped>
