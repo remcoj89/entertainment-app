@@ -2,14 +2,19 @@
   <div class="container">
     <h2 class="heading">Trending</h2>
     <div class="menu">
-      <div class="menu--wrapper">
-        <div class="menu--card" v-for="(item, index) in trending" :key="index">
-          <ul class="menu--card__list">
-            <li>{{ item.year }}</li>
-            <li>{{ item.category }}</li>
-            <li>{{ item.rating }}</li>
-          </ul>
-          <p>{{ item.title }}</p>
+      <div class="menu--wrapper" v-for="(item, index) in trending" :key="index">
+        <div
+          class="menu--card"
+          :style="{ backgroundImage: `url('${item.thumbnail.trending.large}')` }"
+        >
+          <div class="card-info">
+            <p>{{ item.year }} {{ item.category }} {{ item.rating }}</p>
+            <h2>{{ item.title }}</h2>
+          </div>
+          <div class="card-bookmark" @click="item.isBookmarked = !item.isBookmarked">
+            <IconBookmarkEmpty v-show="!item.isBookmarked" />
+            <IconBookmarkFull v-show="item.isBookmarked" />
+          </div>
         </div>
       </div>
     </div>
@@ -76,8 +81,45 @@ export default {
 }
 
 .menu {
+  display: flex;
+  gap: 3%;
+  overflow: hidden;
   &--wrapper {
+    height: 30vh;
+  }
+  &--card {
+    height: 100%;
+    width: 25vw;
     display: flex;
+    align-items: end;
+    border-radius: 10px;
+    position: relative;
+
+    .card-info {
+      margin: 5%;
+      p {
+        @include body-s;
+      }
+
+      h2 {
+        @include heading-s;
+      }
+    }
+
+    .card-bookmark {
+      position: absolute;
+      top: 1.8rem;
+      right: 1.8rem;
+      z-index: 1;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      background-color: grey;
+      cursor: pointer;
+    }
   }
 }
 </style>
