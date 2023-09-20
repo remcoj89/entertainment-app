@@ -1,7 +1,7 @@
 <template>
   <nav class="nav">
     <div class="nav__list">
-      <IconCategoryMovie id="nav__category" />
+      <IconLogo id="logo" />
       <IconNavHome />
       <IconNavMovie />
       <IconNavTvSerie />
@@ -23,20 +23,24 @@ export default {
 @import '@/assets/main.scss';
 .nav {
   height: 96rem;
-  width: 9.6rem;
   background-color: $semi-dark-blue;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 3rem 0;
+  padding: 3rem 1.8rem;
   align-items: center;
   border-radius: 15px;
 
   &__list {
-    height: 25%;
+    #logo {
+      margin-bottom: 5vh;
+    }
+    height: 30%;
     display: flex;
+    flex-shrink: 0;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
   }
 
   &__avatar {

@@ -10,7 +10,10 @@
           <IconBookmarkFull v-show="item.isBookmarked" />
         </div>
       </figure>
-      <p>{{ item.year }} {{ item.category }} {{ item.rating }}</p>
+      <p>
+        {{ item.year }} <span>&#8226;</span> {{ item.category }} <span>&#8226;</span>
+        {{ item.rating }}
+      </p>
       <h2>{{ item.title }}</h2>
     </div>
   </div>
@@ -55,55 +58,52 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/main.scss';
 
-.container {
-  display: flex;
-  flex-direction: column;
+.heading {
+  @include heading-l;
+  display: block;
+  padding: 3% 0;
+}
+
+.grid {
+  display: grid;
+  gap: 1%;
   width: 100%;
-  .heading {
-    @include heading-l;
-    display: block;
-    padding: 3% 0;
-  }
-
-  .grid {
-    display: grid;
-    gap: 1%;
+  grid-template-columns: repeat(4, 1fr);
+  &--card {
     width: 100%;
-    grid-template-columns: repeat(4, 1fr);
-    &--card {
-      width: 100%;
-      height: 100%;
+    height: 100%;
 
-      .card-image {
+    .card-image {
+      position: relative;
+      img {
+        border-radius: 10px;
+        width: 100%;
         position: relative;
-        img {
-          border-radius: 10px;
-          width: 100%;
-          position: relative;
-        }
-        .card-bookmark {
-          position: absolute;
-          top: 1.8rem;
-          right: 1.8rem;
-          z-index: 1;
-          width: 3rem;
-          height: 3rem;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          border-radius: 50%;
-          background-color: grey;
-          cursor: pointer;
-        }
       }
+      .card-bookmark {
+        position: absolute;
+        top: 1.8rem;
+        right: 1.8rem;
+        z-index: 1;
+        width: 3rem;
+        height: 3rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        background-color: grey;
+        cursor: pointer;
+      }
+    }
 
-      p {
-        @include body-s;
-      }
+    p {
+      @include body-m;
+      display: flex;
+      gap: 0.8rem;
+    }
 
-      h2 {
-        @include heading-s;
-      }
+    h2 {
+      @include heading-s;
     }
   }
 }

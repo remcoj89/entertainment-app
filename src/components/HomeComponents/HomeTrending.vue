@@ -8,7 +8,10 @@
           :style="{ backgroundImage: `url('${item.thumbnail.trending.large}')` }"
         >
           <div class="card-info">
-            <p>{{ item.year }} {{ item.category }} {{ item.rating }}</p>
+            <p>
+              {{ item.year }} <span>&#8226;</span> {{ item.category }} <span>&#8226;</span>
+              {{ item.rating }}
+            </p>
             <h2>{{ item.title }}</h2>
           </div>
           <div class="card-bookmark" @click="item.isBookmarked = !item.isBookmarked">
@@ -98,7 +101,9 @@ export default {
     .card-info {
       margin: 5%;
       p {
-        @include body-s;
+        @include body-m;
+        display: flex;
+        gap: 0.8rem;
       }
 
       h2 {
