@@ -1,13 +1,13 @@
 <template>
   <nav class="nav">
     <div class="nav__list">
-      <RouterLink :to="{name: 'home'}">
+      <RouterLink :to="{ name: 'home' }">
         <IconLogo class="nav__list--icon" id="logo" />
       </RouterLink>
-        <IconNavHome class="nav__list--icon" @click.prevent="goToPage('home')"/>
-        <IconNavMovie class="nav__list--icon" @click.prevent="goToPage('movies')"/>
-        <IconNavTvSerie class="nav__list--icon" @click.prevent="goToPage('series')" />
-        <IconNavBookmark class="nav__list--icon" @click.prevent="goToPage('bookmark')" />
+      <IconNavHome class="nav__list--icon" @click.prevent="goToPage('home')" />
+      <IconNavMovie class="nav__list--icon" @click.prevent="goToPage('movies')" />
+      <IconNavTvSerie class="nav__list--icon" @click.prevent="goToPage('series')" />
+      <IconNavBookmark class="nav__list--icon" @click.prevent="goToPage('bookmark')" />
     </div>
 
     <img class="nav__avatar" src="@/assets/images/image-avatar.png" alt="avatar" />
@@ -17,23 +17,23 @@
 <script>
 export default {
   name: 'app-nav',
-  data(){
+  data() {
     return {
-      isActive: false,
+      isActive: false
     }
   },
   methods: {
-    goToPage(input){
-      if(input === 'home'){
-        this.$router.push({name: 'home'})
-      } else if(input === 'movies') {
-        this.$router.push({name: 'movies'})
+    goToPage(input) {
+      if (input === 'home') {
+        this.$router.push({ name: 'home' })
+      } else if (input === 'movies') {
+        this.$router.push({ name: 'movies' })
         console.log('movies')
-      } else if(input === 'series'){
-        this.$router.push({name: 'tv-series'})
-      } else if(input === 'bookmark') {
-          this.$router.push({name: 'bookmarks'})
-        }
+      } else if (input === 'series') {
+        this.$router.push({ name: 'tv-series' })
+      } else if (input === 'bookmark') {
+        this.$router.push({ name: 'bookmarks' })
+      }
     }
   }
 }
@@ -61,10 +61,9 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-  &--icon{
-    cursor: pointer;
-  }
-  
+    &--icon {
+      cursor: pointer;
+    }
   }
 
   &__avatar {

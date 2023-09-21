@@ -15,18 +15,18 @@ const router = createRouter({
     {
       path: '/movies',
       name: 'movies',
-      component: MovieView,
+      component: MovieView
     },
     {
       path: '/tv-series',
       name: 'tv-series',
-      component: TvSeriesView,
+      component: TvSeriesView
     },
     {
       path: '/bookmarks',
       name: 'bookmarks',
-      component: BookmarkView,
-    },
+      component: BookmarkView
+    }
   ]
 })
 
