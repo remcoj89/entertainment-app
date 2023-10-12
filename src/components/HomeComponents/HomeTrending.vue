@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <h2 class="heading">Trending</h2>
-    <div class="menu">
-      <div class="menu--wrapper" v-for="(item, index) in trending" :key="index">
+    <div class="menu" ref="menu" :style="{gridTemplateColumns: `repeat(${trendingLength}, 1fr)`}">
+      <div class="menu--wrapper" v-for="(item, index) in trending" :key="index" >
         <div
           class="menu--card"
           :style="{ backgroundImage: `url('${item.thumbnail.trending.large}')` }"
@@ -34,37 +34,58 @@ export default {
     return {
       dataBase: [],
       trending: [],
-      dataStore: useDataStore()
+      trendingLength: null,
+      dataStore: useDataStore(),
+      isGrabbing: false,
+      initialOffsetX: 0
     }
   },
   computed: {
     ...mapState(useDataStore, ['jsonData'])
   },
   mounted() {
-    this.fetchData()
+    this.fetchData(), this.$refs.menu.addEventListener('mousedown', this.startGrabbing)
+    window.addEventListener('mouseup', this.stopGrabbing)
+    window.addEventListener('mousemove', this.moveMenu)
   },
   methods: {
     async fetchData() {
       try {
         await this.dataStore.fetchData()
         this.dataBase = this.jsonData
-        console.log('json data ', this.jsonData)
       } catch (error) {
         console.error(error)
       }
       this.showTrending()
     },
     showTrending() {
-      // loop door de dataBase array
       this.dataBase.forEach((item) => {
         if (item.thumbnail.trending) {
           this.trending.push(item)
+          this.trendingLength = this.trending.length
         }
       })
-      // seleceteer de items met thumpnail.trending
-      // push de items.thumpnail.trenind in de trending array
-      // show trending array
-    }
+    },
+    startGrabbing(e) {
+      this.isGrabbing = true
+      console.log(this.isGrabbing)
+      this.initialOffsetX = e.clientX - this.$refs.menu.offsetLeft
+      this.$refs.menu.style.cursor = 'grabbing'
+    },
+
+    moveMenu(e) {
+      if (this.isGrabbing) {
+        const newX = e.clientX - this.initialOffsetX
+        this.$refs.menu.style.left = newX + 'px'
+      }
+    },
+
+    stopGrabbing() {
+      this.isGrabbing = false
+      this.$refs.menu.style.cursor = 'grab'
+      console.log(this.isGrabbing)
+    },
+
   }
 }
 </script>
@@ -84,7 +105,8 @@ export default {
 }
 
 .menu {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat();
   gap: 3%;
   overflow: hidden;
   &--wrapper {

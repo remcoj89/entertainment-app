@@ -37,7 +37,7 @@ export default {
 
 .main {
   padding: 0 5%;
-  width: 100%;
+  width: 90%;
   h1 {
     color: white;
     font-size: 8rem;

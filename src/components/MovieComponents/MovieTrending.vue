@@ -2,7 +2,7 @@
   <h2 class="heading">Recommended for you</h2>
 
   <div class="grid">
-    <div class="grid--card" v-for="item in dataBase" :key="item.year">
+    <div class="grid--card" v-for="item in movies" :key="item.year">
       <figure class="card-image">
         <img :src="item.thumbnail.regular.medium" alt="" />
         <div class="card-bookmark" @click="item.isBookmarked = !item.isBookmarked">
@@ -28,6 +28,7 @@ export default {
   data() {
     return {
       dataBase: [],
+      movies: [],
       dataStore: useDataStore(),
       bookmarkActive: false
     }
@@ -46,6 +47,14 @@ export default {
       } catch (error) {
         console.error(error)
       }
+      this.recommendedMovies()
+    },
+    recommendedMovies(){
+      this.dataBase.forEach((item) => {
+        if(item.category === "Movie") {
+          this.movies.push(item)
+        }
+      })
     },
     toggleBookmark() {
       this.bookmarkActive = !this.bookmarkActive
