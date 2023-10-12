@@ -4,11 +4,11 @@
 </template>
 
 <script>
-import MovieTrending from '../components/MovieComponents/MovieTrending.vue';
+import MovieTrending from '../components/MovieComponents/MovieTrending.vue'
 export default {
   name: 'movie-view',
   components: {
-    MovieTrending,
+    MovieTrending
   }
 }
 </script>

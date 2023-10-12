@@ -1,8 +1,15 @@
 <template>
   <div class="container">
     <h2 class="heading">Trending</h2>
-    <div class="menu" ref="menu" :style="{gridTemplateColumns: `repeat(${trendingLength}, 1fr)`}">
-      <div class="menu--wrapper" v-for="(item, index) in trending" :key="index" >
+    <div
+      class="menu"
+      ref="slider"
+      @mousedown="handleMouseDown"
+      @mouseleave="handleMouseLeave"
+      @mouseup="handleMouseUp"
+      @mousemove="handleMouseMove"
+    >
+      <div class="menu--wrapper" v-for="(item, index) in trending" :key="index">
         <div
           class="menu--card"
           :style="{ backgroundImage: `url('${item.thumbnail.trending.large}')` }"
@@ -36,17 +43,15 @@ export default {
       trending: [],
       trendingLength: null,
       dataStore: useDataStore(),
-      isGrabbing: false,
-      initialOffsetX: 0
+      startX: 0,
+      scrollLeft: 0
     }
   },
   computed: {
     ...mapState(useDataStore, ['jsonData'])
   },
   mounted() {
-    this.fetchData(), this.$refs.menu.addEventListener('mousedown', this.startGrabbing)
-    window.addEventListener('mouseup', this.stopGrabbing)
-    window.addEventListener('mousemove', this.moveMenu)
+    this.fetchData()
   },
   methods: {
     async fetchData() {
@@ -66,26 +71,27 @@ export default {
         }
       })
     },
-    startGrabbing(e) {
-      this.isGrabbing = true
-      console.log(this.isGrabbing)
-      this.initialOffsetX = e.clientX - this.$refs.menu.offsetLeft
-      this.$refs.menu.style.cursor = 'grabbing'
+    handleMouseDown(e) {
+      this.isDown = true
+      this.startX = e.pageX - this.$refs.slider.offsetLeft
+      this.scrollLeft = this.$refs.slider.scrollLeft
+      this.$refs.slider.style.cursor = 'grabbing';
     },
-
-    moveMenu(e) {
-      if (this.isGrabbing) {
-        const newX = e.clientX - this.initialOffsetX
-        this.$refs.menu.style.left = newX + 'px'
-      }
+    handleMouseLeave() {
+      this.isDown = false
+      this.$refs.slider.style.cursor = 'grab';
     },
-
-    stopGrabbing() {
-      this.isGrabbing = false
-      this.$refs.menu.style.cursor = 'grab'
-      console.log(this.isGrabbing)
+    handleMouseUp() {
+      this.isDown = false
+      this.$refs.slider.style.cursor = 'grab';
     },
-
+    handleMouseMove(e) {
+      if (!this.isDown) return // Stop de functie als isDown false is
+      e.preventDefault()
+      const x = e.pageX - this.$refs.slider.offsetLeft
+      const walk = (x - this.startX) * 3
+      this.$refs.slider.scrollLeft = this.scrollLeft - walk
+    }
   }
 }
 </script>
@@ -105,10 +111,10 @@ export default {
 }
 
 .menu {
-  display: grid;
-  grid-template-columns: repeat();
+  display: flex;
   gap: 3%;
   overflow: hidden;
+
   &--wrapper {
     height: 30vh;
   }

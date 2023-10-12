@@ -49,9 +49,9 @@ export default {
       }
       this.recommendedMovies()
     },
-    recommendedMovies(){
+    recommendedMovies() {
       this.dataBase.forEach((item) => {
-        if(item.category === "Movie") {
+        if (item.category === 'Movie') {
           this.movies.push(item)
         }
       })
