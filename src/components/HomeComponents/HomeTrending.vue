@@ -38,13 +38,16 @@ import { useDataStore } from '../../stores/data'
 export default {
   name: 'home-view',
   setup() {
+    // Variables
     const dataStore = useDataStore()
     const trending = ref([])
     const startX = ref(0)
     const slider = ref(null)
     const scrollLeft = ref(0)
     const isDown = ref(false)
+    // End Variables
 
+    // Getting data
     const fetchData = async () => {
       try {
         await dataStore.fetchData()
@@ -53,7 +56,9 @@ export default {
         console.error('Error fetching data', error)
       }
     }
+    // End Data
 
+    // Start image slider logic
     const handleMouseDown = (e) => {
       isDown.value = true
       startX.value = e.pageX - slider.value.offsetLeft
@@ -78,18 +83,20 @@ export default {
       const walk = (x - startX.value) * 3
       slider.value.scrollLeft = scrollLeft.value - walk
     }
+    // End image slider logic
 
-    const toggleBookmark = (item) => {
-      item.isBookmarked = !item.isBookmarked
-    }
+    // Toggle bookmark
+ 
+    // End Toggle bookmar
 
+    // Mount
     onMounted(() => {
       fetchData()
     })
+    // End mount
 
     return {
       trending,
-      toggleBookmark,
       handleMouseDown,
       handleMouseLeave,
       handleMouseUp,

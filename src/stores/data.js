@@ -9,6 +9,11 @@ export const useDataStore = defineStore('data', {
     bookmarked: [],
     bookmarkActive: false
   }),
+  getters: {
+    getBookmarkActive(state) {
+      return state.bookmarkActive
+    }
+  },
   actions: {
     async fetchData() {
       try {
@@ -51,8 +56,5 @@ export const useDataStore = defineStore('data', {
         }
       })
     },
-    toggleBookmark() {
-      this.bookmarkActive = !this.bookmarkActive
-    }
   }
 })
