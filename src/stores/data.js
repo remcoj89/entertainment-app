@@ -6,6 +6,7 @@ export const useDataStore = defineStore('data', {
     trending: [],
     movies: [],
     tvSeries: [],
+    bookmarked: [],
     bookmarkActive: false
   }),
   actions: {
@@ -19,6 +20,7 @@ export const useDataStore = defineStore('data', {
       this.showMovies()
       this.showTrending()
       this.showTvSeries()
+      this.showBookmarked()
     },
     showTrending() {
       this.jsonData.forEach((item) => {
@@ -37,8 +39,15 @@ export const useDataStore = defineStore('data', {
     },
     showTvSeries() {
       this.jsonData.forEach((item) => {
-        if (item.category === 'Tv Series') {
+        if (item.category === 'TV Series') {
           this.tvSeries.push(item)
+        }
+      })
+    },
+    showBookmarked() {
+      this.jsonData.forEach((item) => {
+        if (item.isBookmarked) {
+          this.bookmarked.push(item)
         }
       })
     },

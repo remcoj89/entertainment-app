@@ -1,8 +1,8 @@
 <template>
-  <h2 class="heading">Movies</h2>
+  <h2 class="heading">Tv Series</h2>
 
   <div class="grid">
-    <div class="grid--card" v-for="item in movies" :key="item.year">
+    <div class="grid--card" v-for="item in tvSeries" :key="item.year">
       <figure class="card-image">
         <img :src="item.thumbnail.regular.medium" alt="" />
         <div class="card-bookmark" @click="toggleBookmark(item)">
@@ -20,35 +20,23 @@
 </template>
 
 <script>
-import { computed, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useDataStore } from '../../stores/data'
 
 export default {
   name: 'home-view',
   setup() {
-    const dataBase = ref([])
-    const movies = ref([])
+    const tvSeries = ref([])
     const dataStore = useDataStore()
     const bookmarkActive = ref(false)
-
-    const jsonData = computed(() => dataStore.jsonData)
 
     const fetchData = async () => {
       try {
         await dataStore.fetchData()
-        dataBase.value = jsonData.value
+        tvSeries.value = dataStore.tvSeries
       } catch (error) {
         console.error(error)
       }
-      recommendedMovies()
-    }
-
-    const recommendedMovies = () => {
-      dataBase.value.forEach((item) => {
-        if (item.category === 'Movie') {
-          movies.value.push(item)
-        }
-      })
     }
 
     const toggleBookmark = (item) => {
@@ -60,10 +48,8 @@ export default {
     })
 
     return {
-      dataBase,
-      movies,
+      tvSeries,
       bookmarkActive,
-      jsonData,
       toggleBookmark
     }
   }

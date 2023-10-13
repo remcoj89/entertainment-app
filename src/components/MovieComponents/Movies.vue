@@ -1,8 +1,8 @@
 <template>
-  <h2 class="heading">Recommended for you</h2>
+  <h2 class="heading">Movies</h2>
 
   <div class="grid">
-    <div class="grid--card" v-for="item in dataBase" :key="item.year">
+    <div class="grid--card" v-for="item in movies" :key="item.year">
       <figure class="card-image">
         <img :src="item.thumbnail.regular.medium" alt="" />
         <div class="card-bookmark" @click="toggleBookmark(item)">
@@ -26,13 +26,14 @@ import { useDataStore } from '../../stores/data'
 export default {
   name: 'home-view',
   setup() {
+    const movies = ref([])
     const dataStore = useDataStore()
-    const dataBase = ref([])
+    const bookmarkActive = ref(false)
 
     const fetchData = async () => {
       try {
         await dataStore.fetchData()
-        dataBase.value = dataStore.jsonData // Use dataBase.value here
+        movies.value = dataStore.movies
       } catch (error) {
         console.error(error)
       }
@@ -47,7 +48,8 @@ export default {
     })
 
     return {
-      dataBase,
+      movies,
+      bookmarkActive,
       toggleBookmark
     }
   }

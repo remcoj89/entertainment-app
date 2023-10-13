@@ -5,9 +5,15 @@
         <IconLogo class="nav__list--icon" id="logo" />
       </router-link>
       <IconNavHome class="nav__list--icon" @click.prevent="$router.push({ name: 'home' })" />
-      <IconNavMovie class="nav__list--icon" @click.prevent=" $router.push({ name: 'movies' })" />
-      <IconNavTvSerie class="nav__list--icon" @click.prevent=" $router.push({ name: 'movies' })" />
-      <IconNavBookmark class="nav__list--icon" @click.prevent="$router.push({ name: 'bookmarks' })" />
+      <IconNavMovie class="nav__list--icon" @click.prevent="$router.push({ name: 'movies' })" />
+      <IconNavTvSerie
+        class="nav__list--icon"
+        @click.prevent="$router.push({ name: 'tv-series' })"
+      />
+      <IconNavBookmark
+        class="nav__list--icon"
+        @click.prevent="$router.push({ name: 'bookmarks' })"
+      />
     </div>
 
     <img class="nav__avatar" src="@/assets/images/image-avatar.png" alt="avatar" />
@@ -15,14 +21,12 @@
 </template>
 
 <script>
-
 export default {
   name: 'AppNav',
   setup() {
-    return {
-    };
-  },
-};
+    return {}
+  }
+}
 </script>
 
 <style lang="scss" scoped>

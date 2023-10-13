@@ -38,13 +38,13 @@ import { useDataStore } from '../../stores/data'
 export default {
   name: 'home-view',
   setup() {
-    const dataStore = useDataStore();
-    const trending = ref([]);
-    const startX = ref(0);
+    const dataStore = useDataStore()
+    const trending = ref([])
+    const startX = ref(0)
     const slider = ref(null)
-    const scrollLeft = ref(0);
-    const isDown = ref(false);
-    const sliderRef = ref(null); 
+    const scrollLeft = ref(0)
+    const isDown = ref(false)
+
     const fetchData = async () => {
       try {
         await dataStore.fetchData()
@@ -55,29 +55,29 @@ export default {
     }
 
     const handleMouseDown = (e) => {
-      isDown.value = true;
-      startX.value = e.pageX - slider.value.offsetLeft;
-      scrollLeft.value = slider.value.scrollLeft;
-      slider.value.style.cursor = 'grabbing';
-    };
+      isDown.value = true
+      startX.value = e.pageX - slider.value.offsetLeft
+      scrollLeft.value = slider.value.scrollLeft
+      slider.value.style.cursor = 'grabbing'
+    }
 
     const handleMouseLeave = () => {
-      isDown.value = false;
-      slider.value.style.cursor = 'grab';
-    };
+      isDown.value = false
+      slider.value.style.cursor = 'grab'
+    }
 
     const handleMouseUp = () => {
-      isDown.value = false;
-      slider.value.style.cursor = 'grab';
-    };
+      isDown.value = false
+      slider.value.style.cursor = 'grab'
+    }
 
     const handleMouseMove = (e) => {
-      if (!isDown.value) return;
-      e.preventDefault();
-      const x = e.pageX - slider.value.offsetLeft;
-      const walk = (x - startX.value) * 3;
-      slider.value.scrollLeft = scrollLeft.value - walk;
-    };
+      if (!isDown.value) return
+      e.preventDefault()
+      const x = e.pageX - slider.value.offsetLeft
+      const walk = (x - startX.value) * 3
+      slider.value.scrollLeft = scrollLeft.value - walk
+    }
 
     const toggleBookmark = (item) => {
       item.isBookmarked = !item.isBookmarked
@@ -94,7 +94,7 @@ export default {
       handleMouseLeave,
       handleMouseUp,
       handleMouseMove,
-      slider,
+      slider
     }
   }
 }

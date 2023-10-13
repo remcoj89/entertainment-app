@@ -1,5 +1,14 @@
 <template>
-  <div>Bookmark View</div>
+  <Bookmarked />
 </template>
 
-<script></script>
+<script>
+import { defineComponent } from 'vue' // Import defineComponent from Vue
+import Bookmarked from '../components/BookmarkedComponents/Bookmarked.vue'
+
+export default defineComponent({
+  components: {
+    Bookmarked
+  }
+})
+</script>

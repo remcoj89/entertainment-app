@@ -1,14 +1,14 @@
 <template>
-  <MovieTrending />
+  <Movies />
 </template>
 
 <script>
 import { defineComponent } from 'vue' // Import defineComponent from Vue
-import MovieTrending from '../components/MovieComponents/MovieTrending.vue'
+import Movies from '../components/MovieComponents/Movies.vue'
 
 export default defineComponent({
   components: {
-    MovieTrending
+    Movies
   }
 })
 </script>
