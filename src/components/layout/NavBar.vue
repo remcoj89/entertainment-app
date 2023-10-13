@@ -1,13 +1,13 @@
 <template>
   <nav class="nav">
     <div class="nav__list">
-      <RouterLink :to="{ name: 'home' }">
+      <router-link :to="{ name: 'home' }">
         <IconLogo class="nav__list--icon" id="logo" />
-      </RouterLink>
-      <IconNavHome class="nav__list--icon" @click.prevent="goToPage('home')" />
-      <IconNavMovie class="nav__list--icon" @click.prevent="goToPage('movies')" />
-      <IconNavTvSerie class="nav__list--icon" @click.prevent="goToPage('series')" />
-      <IconNavBookmark class="nav__list--icon" @click.prevent="goToPage('bookmark')" />
+      </router-link>
+      <IconNavHome class="nav__list--icon" @click.prevent="$router.push({ name: 'home' })" />
+      <IconNavMovie class="nav__list--icon" @click.prevent=" $router.push({ name: 'movies' })" />
+      <IconNavTvSerie class="nav__list--icon" @click.prevent=" $router.push({ name: 'movies' })" />
+      <IconNavBookmark class="nav__list--icon" @click.prevent="$router.push({ name: 'bookmarks' })" />
     </div>
 
     <img class="nav__avatar" src="@/assets/images/image-avatar.png" alt="avatar" />
@@ -15,28 +15,14 @@
 </template>
 
 <script>
+
 export default {
-  name: 'app-nav',
-  data() {
+  name: 'AppNav',
+  setup() {
     return {
-      isActive: false
-    }
+    };
   },
-  methods: {
-    goToPage(input) {
-      if (input === 'home') {
-        this.$router.push({ name: 'home' })
-      } else if (input === 'movies') {
-        this.$router.push({ name: 'movies' })
-        console.log('movies')
-      } else if (input === 'series') {
-        this.$router.push({ name: 'tv-series' })
-      } else if (input === 'bookmark') {
-        this.$router.push({ name: 'bookmarks' })
-      }
-    }
-  }
-}
+};
 </script>
 
 <style lang="scss" scoped>

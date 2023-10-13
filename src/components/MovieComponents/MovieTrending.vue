@@ -1,11 +1,11 @@
 <template>
-  <h2 class="heading">Recommended for you</h2>
+  <h2 class="heading">Movies</h2>
 
   <div class="grid">
     <div class="grid--card" v-for="item in movies" :key="item.year">
       <figure class="card-image">
         <img :src="item.thumbnail.regular.medium" alt="" />
-        <div class="card-bookmark" @click="item.isBookmarked = !item.isBookmarked">
+        <div class="card-bookmark" @click="toggleBookmark(item)">
           <IconBookmarkEmpty v-show="!item.isBookmarked" />
           <IconBookmarkFull v-show="item.isBookmarked" />
         </div>
@@ -20,44 +20,51 @@
 </template>
 
 <script>
-import { mapState } from 'pinia'
+import { computed, onMounted, ref } from 'vue'
 import { useDataStore } from '../../stores/data'
 
 export default {
-  name: 'homme-view',
-  data() {
-    return {
-      dataBase: [],
-      movies: [],
-      dataStore: useDataStore(),
-      bookmarkActive: false
-    }
-  },
-  computed: {
-    ...mapState(useDataStore, ['jsonData'])
-  },
-  mounted() {
-    this.fetchData()
-  },
-  methods: {
-    async fetchData() {
+  name: 'home-view',
+  setup() {
+    const dataBase = ref([])
+    const movies = ref([])
+    const dataStore = useDataStore()
+    const bookmarkActive = ref(false)
+
+    const jsonData = computed(() => dataStore.jsonData)
+
+    const fetchData = async () => {
       try {
-        await this.dataStore.fetchData()
-        this.dataBase = this.jsonData
+        await dataStore.fetchData()
+        dataBase.value = jsonData.value
       } catch (error) {
         console.error(error)
       }
-      this.recommendedMovies()
-    },
-    recommendedMovies() {
-      this.dataBase.forEach((item) => {
+      recommendedMovies()
+    }
+
+    const recommendedMovies = () => {
+      dataBase.value.forEach((item) => {
         if (item.category === 'Movie') {
-          this.movies.push(item)
+          movies.value.push(item)
         }
       })
-    },
-    toggleBookmark() {
-      this.bookmarkActive = !this.bookmarkActive
+    }
+
+    const toggleBookmark = (item) => {
+      item.isBookmarked = !item.isBookmarked
+    }
+
+    onMounted(() => {
+      fetchData()
+    })
+
+    return {
+      dataBase,
+      movies,
+      bookmarkActive,
+      jsonData,
+      toggleBookmark
     }
   }
 }

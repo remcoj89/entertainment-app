@@ -21,7 +21,7 @@
             </p>
             <h2>{{ item.title }}</h2>
           </div>
-          <div class="card-bookmark" @click="item.isBookmarked = !item.isBookmarked">
+          <div class="card-bookmark" @click="toggleBookmark(item)">
             <IconBookmarkEmpty v-show="!item.isBookmarked" />
             <IconBookmarkFull v-show="item.isBookmarked" />
           </div>
@@ -32,65 +32,69 @@
 </template>
 
 <script>
-import { mapState } from 'pinia'
+import { ref, onMounted } from 'vue'
 import { useDataStore } from '../../stores/data'
 
 export default {
-  name: 'homme-view',
-  data() {
-    return {
-      dataBase: [],
-      trending: [],
-      trendingLength: null,
-      dataStore: useDataStore(),
-      startX: 0,
-      scrollLeft: 0
-    }
-  },
-  computed: {
-    ...mapState(useDataStore, ['jsonData'])
-  },
-  mounted() {
-    this.fetchData()
-  },
-  methods: {
-    async fetchData() {
+  name: 'home-view',
+  setup() {
+    const dataStore = useDataStore();
+    const trending = ref([]);
+    const startX = ref(0);
+    const slider = ref(null)
+    const scrollLeft = ref(0);
+    const isDown = ref(false);
+    const sliderRef = ref(null); 
+    const fetchData = async () => {
       try {
-        await this.dataStore.fetchData()
-        this.dataBase = this.jsonData
+        await dataStore.fetchData()
+        trending.value = dataStore.trending
       } catch (error) {
-        console.error(error)
+        console.error('Error fetching data', error)
       }
-      this.showTrending()
-    },
-    showTrending() {
-      this.dataBase.forEach((item) => {
-        if (item.thumbnail.trending) {
-          this.trending.push(item)
-          this.trendingLength = this.trending.length
-        }
-      })
-    },
-    handleMouseDown(e) {
-      this.isDown = true
-      this.startX = e.pageX - this.$refs.slider.offsetLeft
-      this.scrollLeft = this.$refs.slider.scrollLeft
-      this.$refs.slider.style.cursor = 'grabbing';
-    },
-    handleMouseLeave() {
-      this.isDown = false
-      this.$refs.slider.style.cursor = 'grab';
-    },
-    handleMouseUp() {
-      this.isDown = false
-      this.$refs.slider.style.cursor = 'grab';
-    },
-    handleMouseMove(e) {
-      if (!this.isDown) return // Stop de functie als isDown false is
-      e.preventDefault()
-      const x = e.pageX - this.$refs.slider.offsetLeft
-      const walk = (x - this.startX) * 3
-      this.$refs.slider.scrollLeft = this.scrollLeft - walk
+    }
+
+    const handleMouseDown = (e) => {
+      isDown.value = true;
+      startX.value = e.pageX - slider.value.offsetLeft;
+      scrollLeft.value = slider.value.scrollLeft;
+      slider.value.style.cursor = 'grabbing';
+    };
+
+    const handleMouseLeave = () => {
+      isDown.value = false;
+      slider.value.style.cursor = 'grab';
+    };
+
+    const handleMouseUp = () => {
+      isDown.value = false;
+      slider.value.style.cursor = 'grab';
+    };
+
+    const handleMouseMove = (e) => {
+      if (!isDown.value) return;
+      e.preventDefault();
+      const x = e.pageX - slider.value.offsetLeft;
+      const walk = (x - startX.value) * 3;
+      slider.value.scrollLeft = scrollLeft.value - walk;
+    };
+
+    const toggleBookmark = (item) => {
+      item.isBookmarked = !item.isBookmarked
+    }
+
+    onMounted(() => {
+      fetchData()
+    })
+
+    return {
+      trending,
+      toggleBookmark,
+      handleMouseDown,
+      handleMouseLeave,
+      handleMouseUp,
+      handleMouseMove,
+      slider,
     }
   }
 }

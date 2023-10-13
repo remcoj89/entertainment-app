@@ -5,7 +5,7 @@
     <div class="grid--card" v-for="item in dataBase" :key="item.year">
       <figure class="card-image">
         <img :src="item.thumbnail.regular.medium" alt="" />
-        <div class="card-bookmark" @click="item.isBookmarked = !item.isBookmarked">
+        <div class="card-bookmark" @click="toggleBookmark(item)">
           <IconBookmarkEmpty v-show="!item.isBookmarked" />
           <IconBookmarkFull v-show="item.isBookmarked" />
         </div>
@@ -20,35 +20,35 @@
 </template>
 
 <script>
-import { mapState } from 'pinia'
+import { onMounted, ref } from 'vue'
 import { useDataStore } from '../../stores/data'
 
 export default {
-  name: 'homme-view',
-  data() {
-    return {
-      dataBase: [],
-      dataStore: useDataStore(),
-      bookmarkActive: false
-    }
-  },
-  computed: {
-    ...mapState(useDataStore, ['jsonData'])
-  },
-  mounted() {
-    this.fetchData()
-  },
-  methods: {
-    async fetchData() {
+  name: 'home-view',
+  setup() {
+    const dataStore = useDataStore()
+    const dataBase = ref([])
+
+    const fetchData = async () => {
       try {
-        await this.dataStore.fetchData()
-        this.dataBase = this.jsonData
+        await dataStore.fetchData()
+        dataBase.value = dataStore.jsonData  // Use dataBase.value here
       } catch (error) {
         console.error(error)
       }
-    },
-    toggleBookmark() {
-      this.bookmarkActive = !this.bookmarkActive
+    }
+
+    const toggleBookmark = (item) => {
+      item.isBookmarked = !item.isBookmarked
+    }
+
+    onMounted(() => {
+      fetchData()
+    })
+
+    return {
+      dataBase,
+      toggleBookmark
     }
   }
 }
